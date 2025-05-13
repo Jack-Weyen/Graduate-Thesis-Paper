@@ -1,0 +1,15 @@
+\section{General Conversational RAG Pipeline}
+
+Before we can begin the literature review, it is useful to become familiarized with the RAG pipeline as it generally appears in conversational contexts. Finer details, such as explanations of the various types of memory unit, storage formats, etc., will come later during the taxonomy. A visualization of the pipeline, and its variant with reflection, can be seen in Figure \ref{pipeline}.
+
+\subsection{Memory Units and Storage Format} 
+	
+The pipeline begins with the session dialogue, the log of the current conversation at the present time. From this dialogue, a certain unit of information is taken, which can range from an individual turn (\cite{Park2023}), a summary of the entire conversational session (\cite{Li2024}), or even secondary information extracted from the dialogue, such as an observation (\cite{Maharana2024}). These units of memory are then stored in the long-term memory module, which is typically a vector database (\cite{Hatalis2024}), but may also be a knowledge base (\cite{Sanmartin2024}). 
+
+\subsection{Retrieval and Generation}
+
+With every new turn by the user, the model then retrieves the most relevant memories from the long-term memory. Given the aforementioned prevalence of vector databases as a memory format, most retrieval methods consist of calculating the cosine similarity (or some other similarity metric) of each memory with that of the user's newly input turn, and retrieving the top-\textit{k} results (\cite{Hatalis2024}). However, other methods of retrieval, most notably based on topic, have been tested (\cite{Li2024}). The retrieved memories are then included along with the conversational persona (a prompt defining the personality the chatbot is to roleplay as) and session dialogue as context for generation. 
+
+\subsection{Optional Step: Reflection}
+
+Some models include an additional step between retrieval and generation, termed "reflection" (\cite{Maharana2024}, \cite{Park2023}). Here, the model is asked to reflect on the retrieved memories, i.e. synthesize from them an observation or insight, given the most recent user turn. The resulting reflection is then submitted to the model input in lieu of the raw memories.

@@ -1,0 +1,76 @@
+\babel@toc {american}{}\relax 
+\contentsline {section}{\numberline {1}Introduction}{1}{}%
+\contentsline {section}{\numberline {2}General Conversational RAG Pipeline}{4}{}%
+\contentsline {subsection}{\numberline {2.1}Memory Units and Storage Format}{4}{}%
+\contentsline {subsection}{\numberline {2.2}Retrieval and Generation}{4}{}%
+\contentsline {subsection}{\numberline {2.3}Optional Step: Reflection}{4}{}%
+\contentsline {section}{\numberline {3}Literature Review}{5}{}%
+\contentsline {subsection}{\numberline {3.1}Memory Matters: The Need to Improve Long-Term Memory in LLM Agents (Hatalis et al., 2024)}{5}{}%
+\contentsline {subsection}{\numberline {3.2}KG-RAG: Bridging the Gap Between Knowledge and Creativity (Sanmartín, 2024)}{5}{}%
+\contentsline {subsection}{\numberline {3.3}Evaluating Very Long-Term Conversational Memory of LLM Agents (Maharana et al., 2024)}{7}{}%
+\contentsline {subsection}{\numberline {3.4}Generative Agents: Interactive Simulacra of Human Behavior (Park et al., 2023)}{8}{}%
+\contentsline {subsection}{\numberline {3.5}MemoryBank: Enhancing Large Language Models with Long-Term Memory (Zhong et al., 2023)}{9}{}%
+\contentsline {subsection}{\numberline {3.6}Hello Again! LLM-powered Personalized Agent for Long-term Dialogue (Li et al., 2024)}{9}{}%
+\contentsline {section}{\numberline {4}General Conversational RAG Taxonomy}{11}{}%
+\contentsline {subsection}{\numberline {4.1}Memory Storage Format}{11}{}%
+\contentsline {subsection}{\numberline {4.2}Memory Unit Type}{11}{}%
+\contentsline {subsection}{\numberline {4.3}Retrieval Method}{12}{}%
+\contentsline {subsection}{\numberline {4.4}Reflection}{12}{}%
+\contentsline {subsection}{\numberline {4.5}Persona Module}{12}{}%
+\contentsline {section}{\numberline {5}Chatbot Architecture}{14}{}%
+\contentsline {subsection}{\numberline {5.1}General Pipeline}{14}{}%
+\contentsline {subsection}{\numberline {5.2}Dataloader}{15}{}%
+\contentsline {subsection}{\numberline {5.3}Long-term Memory Formats}{16}{}%
+\contentsline {subsubsection}{\numberline {5.3.1}Knowledge Base}{16}{}%
+\contentsline {subsubsection}{\numberline {5.3.2}Knowledge Graph}{16}{}%
+\contentsline {subsection}{\numberline {5.4}Memory Creation}{18}{}%
+\contentsline {subsection}{\numberline {5.5}Retrieval}{18}{}%
+\contentsline {subsubsection}{\numberline {5.5.1}Relevancy Scoring Input Creation}{18}{}%
+\contentsline {subsubsection}{\numberline {5.5.2}Relevancy Scoring}{19}{}%
+\contentsline {subsection}{\numberline {5.6}Reflection}{19}{}%
+\contentsline {section}{\numberline {6}Experiments}{20}{}%
+\contentsline {subsection}{\numberline {6.1}Pipeline Variants}{20}{}%
+\contentsline {subsection}{\numberline {6.2}Dataset}{20}{}%
+\contentsline {subsection}{\numberline {6.3}Evaluation}{21}{}%
+\contentsline {subsubsection}{\numberline {6.3.1}F1 Score}{21}{}%
+\contentsline {subsubsection}{\numberline {6.3.2}Recall}{22}{}%
+\contentsline {subsubsection}{\numberline {6.3.3}Adversarial Questions}{22}{}%
+\contentsline {section}{\numberline {7}Results}{23}{}%
+\contentsline {subsection}{\numberline {7.1}Data Exploration}{23}{}%
+\contentsline {subsubsection}{\numberline {7.1.1}F1 Score}{23}{}%
+\contentsline {subsubsection}{\numberline {7.1.2}Recall}{24}{}%
+\contentsline {subsection}{\numberline {7.2}Analysis Against Baseline}{24}{}%
+\contentsline {subsubsection}{\numberline {7.2.1}By Feature Variants}{26}{}%
+\contentsline {subsubsection}{\numberline {7.2.2}By Pipeline}{26}{}%
+\contentsline {subsubsection}{\numberline {7.2.3}Examining the Performance of Knowledge Graphs}{28}{}%
+\contentsline {subsection}{\numberline {7.3}Tests Within Features}{28}{}%
+\contentsline {subsubsection}{\numberline {7.3.1}Memory Storage Format}{28}{}%
+\contentsline {subsubsection}{\numberline {7.3.2}Memory Unit Type}{33}{}%
+\contentsline {subsubsection}{\numberline {7.3.3}Retrieval Method}{34}{}%
+\contentsline {subsubsection}{\numberline {7.3.4}Reflection}{34}{}%
+\contentsline {subsection}{\numberline {7.4}Tests Between Features}{35}{}%
+\contentsline {subsubsection}{\numberline {7.4.1}Memory Storage Format × Memory Unit Type}{36}{}%
+\contentsline {subsubsection}{\numberline {7.4.2}Memory Storage Format × Retrieval Method}{36}{}%
+\contentsline {subsubsection}{\numberline {7.4.3}Memory Storage Format × Reflection}{38}{}%
+\contentsline {subsubsection}{\numberline {7.4.4}Memory Unit Type × Retrieval Method}{38}{}%
+\contentsline {subsubsection}{\numberline {7.4.5}Memory Unit Type × Reflection}{38}{}%
+\contentsline {subsubsection}{\numberline {7.4.6}Retrieval Method × Reflection}{40}{}%
+\contentsline {subsection}{\numberline {7.5}Tests Between Features and Question Types}{40}{}%
+\contentsline {subsubsection}{\numberline {7.5.1}General Trends Exhibited by Question Types}{40}{}%
+\contentsline {subsubsection}{\numberline {7.5.2}Memory Storage Format × Question Type}{42}{}%
+\contentsline {subsubsection}{\numberline {7.5.3}Memory Unit Type × Question Type}{43}{}%
+\contentsline {subsubsection}{\numberline {7.5.4}Retrieval Method × Question Type}{43}{}%
+\contentsline {subsubsection}{\numberline {7.5.5}Reflection × Question Type}{44}{}%
+\contentsline {section}{\numberline {8}Conclusion}{47}{}%
+\contentsline {subsection}{\numberline {8.1}Contributions}{47}{}%
+\contentsline {subsubsection}{\numberline {8.1.1}Failure of Knowledge Graphs}{47}{}%
+\contentsline {subsubsection}{\numberline {8.1.2}Ineffectiveness of Exact Matching Techniques}{47}{}%
+\contentsline {subsubsection}{\numberline {8.1.3}Inconsistency Regarding Topic Overlap Performance}{48}{}%
+\contentsline {subsubsection}{\numberline {8.1.4}Other Features Perform Predictably}{48}{}%
+\contentsline {subsubsection}{\numberline {8.1.5}Interactions can be Ignored}{48}{}%
+\contentsline {subsubsection}{\numberline {8.1.6}Interactions with Questions}{49}{}%
+\contentsline {subsection}{\numberline {8.2}Future Research}{49}{}%
+\contentsline {subsubsection}{\numberline {8.2.1}Extra Feature Variants and Features}{49}{}%
+\contentsline {subsubsection}{\numberline {8.2.2}Combinations of Feature Variants}{49}{}%
+\contentsline {subsubsection}{\numberline {8.2.3}Additional Test Methodology}{50}{}%
+\contentsline {subsubsection}{\numberline {8.2.4}Alternate Data Processing}{50}{}%

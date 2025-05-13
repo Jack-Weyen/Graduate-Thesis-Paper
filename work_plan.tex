@@ -1,0 +1,15 @@
+\section{Preliminary Work and Work Plan}
+
+Below, I present the preliminary work that has thus far been committed to this thesis, as well as my future plans.
+
+\subsection{Preliminary Work}
+
+Thus far, a basic generative agents model has been completed using Phi3 (7B) as base LLM model. The model is outfitted with a knowledge base storing individual turns, a retrieval mechanism acting upon semantic similarity, and a reflection module that reflects upon retrieved memories. The biggest current issue is the reflection part of the pipeline, as the model has trouble keeping track of which statements are said by itself, and which are said by the user.
+
+\subsection{Work Plan}
+
+Using a popular model such as Llama 2 or 3, I hope to implement every alternative feature described in the research question section above. Considering the number of memory storage formats (2), memory granularity levels (3), memory retrieval methods (2), the presence or absence of memory reflection (2), and the presence or absence of a separate persona memory (2), and considering that memory granularity and semantic retrieval cannot be applied to knowledge graphs, the final model would be capable of 28 total combinations, i.e. 28 different pipelines, which would be specified by the user at runtime.
+
+Alongside the main model, two non-RAG models would be tested as baselines, one with an average context window (around 4K tokens) and one with a long context (around 16K tokens). However, given the expansive growth in context window size in the last year (even the smallest version of Llama 3 has a context window of 128K tokens (\cite{Huggingface_Llama3_8B}), distinctions in context window size might be unnecessary. 
+
+As for the evaluation itself, questions will be lifted from \cite{Maharana2024} with modifications to the multi-hop questions to create a personal/event memory distinction. There is no need to overcomplicate scoring, so a simple binary metric of answer accuracy, such as correct/incorrect, shall be employed, and F1 scores calculated. 

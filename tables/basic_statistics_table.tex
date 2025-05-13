@@ -1,0 +1,31 @@
+\begin{tabular}{llllrr}
+\toprule
+memory\_storage\_format & memory\_unit\_type & retrieval\_method & reflection & bertscore\_f1 & recall \\
+\midrule
+knowledge base & turn & cosine similarity & True & 0.453117 & 0.532216 \\
+knowledge base & observation & cosine similarity & True & 0.452971 & 0.516694 \\
+knowledge base & observation & cosine similarity & False & 0.444574 & 0.516694 \\
+knowledge base & turn & cosine similarity & False & 0.437911 & 0.532216 \\
+knowledge base & turn & topic overlap & True & 0.430522 & 0.439872 \\
+knowledge base & summary & cosine similarity & True & 0.430064 & 0.751187 \\
+knowledge base & observation & topic overlap & True & 0.428343 & 0.383856 \\
+Baseline & Baseline & Baseline & Baseline & 0.420121 & 0.000000 \\
+knowledge base & summary & topic overlap & True & 0.419738 & 0.708246 \\
+knowledge graph & observation & cosine similarity & True & 0.412327 & 0.212505 \\
+knowledge graph & observation & cosine similarity & False & 0.409076 & 0.212505 \\
+knowledge graph & turn & cosine similarity & True & 0.404336 & 0.203542 \\
+knowledge graph & observation & topic overlap & True & 0.403828 & 0.164406 \\
+knowledge base & turn & topic overlap & False & 0.402905 & 0.439872 \\
+knowledge graph & summary & cosine similarity & True & 0.401496 & 0.280427 \\
+knowledge base & observation & topic overlap & False & 0.400507 & 0.383856 \\
+knowledge graph & turn & topic overlap & True & 0.394122 & 0.153908 \\
+knowledge graph & summary & topic overlap & True & 0.391807 & 0.292161 \\
+knowledge graph & observation & topic overlap & False & 0.391188 & 0.164406 \\
+knowledge graph & summary & cosine similarity & False & 0.390025 & 0.280427 \\
+knowledge base & summary & cosine similarity & False & 0.387475 & 0.751187 \\
+knowledge graph & turn & cosine similarity & False & 0.387198 & 0.203542 \\
+knowledge base & summary & topic overlap & False & 0.385587 & 0.708246 \\
+knowledge graph & summary & topic overlap & False & 0.376829 & 0.292161 \\
+knowledge graph & turn & topic overlap & False & 0.374681 & 0.153908 \\
+\bottomrule
+\end{tabular}

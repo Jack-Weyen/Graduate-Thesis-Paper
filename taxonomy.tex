@@ -1,0 +1,32 @@
+\section{General Conversational RAG Taxonomy}
+
+Having presented the relevant papers, we can now begin piece together a taxonomy of the different approaches currently being employed in the developing field of conversational RAG. From the literature we can identify five different aspects of the conversational RAG pipeline that have been approached with different techniques. These are presented below, the varying techniques presented alongside any insights into their comparative performance with one another.
+
+
+\subsection{Memory Storage Format}
+
+Memory storage format refers to the nature of the storage system used to store long-term memories. Currently, all RAG systems employed explicitly for conversation utilize knowledge bases, as stated by \cite{Hatalis2024}. However, as we have seen, research into RAG within question-answering tasks has presented knowledge graphs as a possible alternative (\cite{Sanmartin2024}, \cite{Guan2023}, \cite{Yang2024}). \cite{Sanmartin2024} in particular shows that while less accurate than knowledge bases when used in RAG, knowledge graphs are more useful in mitigating model hallucination. Given the importance of the ability to produce believable answers has in roleplay, there is strong motivation to see if knowledge graphs would provide similar benefits in the conversational domain, especially against antagonistic questioning.
+
+
+\subsection{Memory Unit Type}
+
+Memory unit type refers to the unit of memory that is stored in the long-term memory. Among the papers discussed, there are three main types of memory unit: first are single turns in the conversation (\cite{Park2023}), second are individual observations, i.e. facts, that can be drawn from the dialogue using a separate LLM (\cite{Maharana2024}), and third are summaries of sections of dialogue, typically sessions defined by arbitrarily long intervening gaps in time (\cite{Maharana2024}, \cite{Zhong2023}, \cite{Li2024}). One common type of summary, event summaries (\cite{Zhong2023}, \cite{Li2024}), only summarize events and therefore could be considered a separate type of memory unit; in this taxonomy, it will not. Sometimes multiple of these memory units are employed at once, as is the case with \cite{Zhong2023}. All three memory unit types are compared in \cite{Maharana2024}, as previously mentioned, with observations performing best overall, turns performing better on single- and multi-hop questions, and summaries being particularly suited to adversarial questions. It remains to be seen, however, if these trends hold when these memory unit types are paired with different pipeline features.
+
+
+\subsection{Retrieval Method}
+
+Semantic similarity appears to be the most common metric used to determine what long-term memories should be retrieved (\cite{Hatalis2024}, \cite{Maharana2024}, \cite{Park2023}, \cite{Zhong2023}, \cite{Li2024}), being used by every model using a knowledge base. However some models utilize alternative metrics alongside this, such as temporal recency (\cite{Park2023}, \cite{Li2024}), frequency of retrieval (\cite{Zhong2023}), importance (\cite{Park2023}), and topic (\cite{Li2024}). The only paper to make a direct comparison between these various methods is \cite{Li2024}, who compare semantic- and topic-based retrieval and find the latter to be better quantitatively (better precision and recall) and qualitatively (more coherent, fluent and engaging dialogues). Since \cite{Li2024} only test retrieval using memories with summary-level granularity, it remains to be seen if these improvements persist with units with more granularity (turns, observations).
+
+
+\subsection{Reflection}
+
+Of the papers covered, only two include the optional step of summarizing or reflecting upon retrieved memories, \cite{Maharana2024} and \cite{Park2023}), and of these two, only \cite{Park2023} evaluates the method against a baseline. In the corresponding ablation study, the exclusion of reflection from the model pipeline leads to a significant decrease in overall behavioral believability. Thus, reflection allows models to synthesize their available information in order to create opinions and come to conclusions, allowing for the expression of more believable behaviors. However, while reflection has been proven against non-reflecting baselines, it has not been tested against types of memory units. 
+	
+Furthermore, it appears that reflection has been implemented differently between \cite{Maharana2024} and \cite{Park2023}. In the former, retrieved memories are reflected upon, and that reflection is fed directly into the model for generation. In the latter, however, reflection is much more complicated. The model is asked to reflect and come up with high-level questions given its past experiences, retrieve memories (and previous reflections) based upon these questions, and then answer them. As just now hinted, reflections are not used immediately for generation, but stored for use later. Thus, while this more complex form of reflection has been evaluated against a baseline, the more simple one has not, and the two forms have not been compared against the other. 
+
+
+\subsection{Persona Module}
+
+A final aspect of the conversational RAG pipeline that sees varied implementation is that of a separate long-term memory storage module for memories of facts relating to the model's and user's identities, i.e. their persona (\cite{Zhong2023}, \cite{Li2024}). Ablation studies from \cite{Li2024} have shown that having a module specifically for personal information positively influences long-term dialogue capabilities. However, such findings speak to a general improvement in performance, and no research has investigated how persona memory can influence specific conversational tasks; for example, one might argue that including a memory module for personas would help models better handle adversarial questioning, as the retrieved persona traits could help "remind" the model of important information.
+
+ 

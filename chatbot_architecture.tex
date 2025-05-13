@@ -1,0 +1,127 @@
+\section{Chatbot Architecture}
+
+In this section, we cover the architecture of the chatbot used in this study. This architecture consists of a central pipeline that remains unchanged across studies and handles the main chatbot loop, and the various functions that are referenced within it, including the features (memory storage format, memory unit type, retrieval method, and reflection) and memory management (loading, updating, saving, deleting). Each will be covered in turn below. The code for testing persona modules, deactivated due to time constraints, is also included, albeit only in part. Additionally, the dataloader used to pre-load long-term memories for testing will also be described.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{General Pipeline}
+
+What follows is a high-level overview of the general pipeline used across tests. The chatbot is designed to operate in two main modes: a "testing" mode, where input in the form of a list of questions can be fed into the model along with information about which features are to be tested, questions which the chabot then answers with reference to a pre-uploaded long-term memory; and a "chatting" mode in which the user can chat in real time with a default persona. In-depth explanations of each feature of the pipeline will follow in the next subsections.
+
+First the history, long-term memory, past session summary, and persona modules are uploaded from memory files; if they do not exist, empty ones are made. In chatting mode, memory files can be deleted if desired, to allow the user to begin conversing with a blank chatbot memory. Following this is the main chatbot loop, which in testing mode runs until the final question has been answered, and in chatting model ends when the user types "Quit". Within this loop, the query is taken either from a list of questions (when testing) or from the user input (when chatting). Whatever the input, it is then added to the conversation history.
+ 
+Next, if it is not empty, the long-term memory is consulted. The top-\textit{k} highest scoring memories are retrieved according to the specified retrieval method; also retrieved are the exact session and turn(s) each of those memories originally came from (called the "memory evidence"). The model then reflects on these memories (if so desired), and a reflection is obtained. 
+
+Following this, the input for the LLM is assembled. First are rules which dictate that the LLM act as a person, rather than as an assistant, followed by the model persona. The persona for testing mode gives the LLM the role of someone answering questions regarding a conversation between two friends, while the persona for chatting mode gives it the role of a stereotypical anime girl named "Hiyuki". To this, either the user query is added, in the case of testing, or the entire conversation history is added, in the case of chatting. The reason the entire history is not used when testing is to prevent the previous questions and answers from influencing the model's answer, since the goal is to test its long-term memory. Next, if memories were successfully retrieved, either the reflection, or, in the case reflection is not used, then the retrieved memories themselves are added to the input along with an explanatory prompt. Finally, the past session summary and persona modules for both speakers are added, if required. The chatbot then generates a response based on this input using Llama-3-8B-8192, accessed by means of a Groq client. This response is then added to the conversation history, and additionally printed to the terminal in chatting mode. 
+
+The final actions of the loop differ depending upon the mode. In testing mode, the loop proceeds to the next question until the final question has been answered, at which point the answers and the memory evidence are returned. In chatting mode, the history is instead converted to the appropriate type of memory unit and added to the long-term memory. For turns and observations, this occurs within the chatbot loop, whereas for summaries this occurs once the conversational session has been concluded, since they are generated based on the entire session. At the end of the session, the persona modules are also updated with facts drawn from the session for both speakers, and a session summary is made. Finally, these updated long-term memories, persona modules, and past session summary are saved to file.
+
+
+\subsection{Dataloader}
+
+As previously mentioned, during testing the chatbot uses pre-loaded long-term memories that have been saved to various files. This was done to ensure that long-term memories wouldn't need to be recreated every time a pipeline was tested, saving on runtime. However, since these testing-specific long-term memories are meant to store data taken from \textsc{LoCoMo}, and since it was unfeasible to modify the the general pipeline to do so, a separate dataloader was made to load the \textsc{LoCoMo} conversations into long-term memory files. The structure of the dataloader is similar to the general pipeline, utilizing many of the same functions. For each conversation and session in \textsc{LoCoMo}, turns are processed two at a time, as the query and response would be in the general pipeline. These turns are converted into memories according to unit type, and added to the long-term memory according to the specified format. Because \textsc{LoCoMo} provides the observations and summaries for each session alongside the session transcript, the option was included to either use these or generate new ones on the fly. Like in the general pipeline, turns and observations are stored every two turns, and summaries at the end of each session. Then, once all sessions of a conversation have been processed, the long-term memory is saved to a unique file. Since the long-term memories vary according to memory storage format and memory unit type, six different types of long-term memory were produced for each conversation in \textsc{LoCoMo}, resulting in 60 separate long-term memories. In addition to these, the summary of the last session for each conversation was stored, again with the option to use the ready made one found in the dataset, or to generate one anew.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Long-term Memory Formats}
+
+Below are the two types of memory storage format. 
+
+
+\subsubsection{Knowledge Base}
+
+The knowledge base used is a simple list consisting of individual memories. Each memory consists of the memory text (either a turn, an observation, or a summary), the topics, the sentence embedding, and the memory evidence.
+
+\subsubsection{Knowledge Graph}
+
+The knowledge graph used is a NetworkX MultiDiGraph, a directed graph with parallel edges that stores a source, its target, and the directed relationship between, them alongside other data. To update the knowledge graph with a memory, all relationship triples (tuples containing the source, relationship, and target) are extracted from the memory's text. The method of relationship extraction used differs in three fundamental ways from most traditional methods. First, typical models define the source, relationship, and target as the subject, verb, and direct object respectively; in the present model, however, targets have been expanded to include predicate adjectives ("Guilliman is detail-oriented"), prepositional phrases ("The Emperor resides on Terra"), and sentence clauses ("Yarrick said he killed the ork"), allowing for more information to be stored. 
+
+Second, rather than selecting just the heads of phrases, the entire phrase is selected: for example, the noun phrase "the imperial feudal world" is reduced to "world" using other methods, in this one it remains unchanged. While this admittedly makes sources and targets more specific, and therefore less likely to be retrieved, it is hoped that this drawback would be balanced by an increase in more relevant results: if someone is talking about space marines, it would be preferable that only information about space marines is retrieved, rather than information about marines of any type. Finally, while most relationship extraction methods rely on dependancy trees, the method used in this thesis relies on constituency trees (extracted using the Berkeley Neural Parser). Unlike dependency trees, which force the user to account for every possible combination of modifiers in order to extract a phrase, constituency trees allow phrases to be selected as a single unit, which offers a considerable advantage.
+
+From the constituency tree, all clauses are extracted, and for each, conjunctions are resolved such that additional copies of the clause are created for each member of the conjunction. For example, the sentence
+
+\begin{displayquote}
+"I like canids and felinids."
+\end{displayquote}
+
+\noindent would result in three separate clauses — the original and an additional for each animal:
+
+\begin{displayquote}
+"I like canids and felinids."
+
+"I like canids."
+
+"I like felinids."
+\end{displayquote}
+
+\noindent Then, from each clause the source, target, and relationship are extracted. The source is the first noun phrase in the sentence, whereas the target is the first phrase in the predicate that is 1) a noun phrase or sentence phrase, 2) a noun phrase in a prepositional phrase, or 3) a predicate adjective, in that order. Finally, the relationship is defined as all text that occurs between the source and target. When no target was found, "N/A" was used as a default, and the entire predicate becomes the relationship. Given the above example, the extracted relationship triples would be:
+
+\begin{displayquote}
+("I", "like", "canids and felinids")
+
+("I", "like", "canids")
+
+("I", "like", "felinids")
+\end{displayquote}
+
+
+\noindent Then for each extracted relationship triple the source, relationship, and target and joined into a single text, any speaker names are masked (discussed in detail in Section \ref{relevancy_scoring_input_creation}), and a set of topics and a sentence embedding is produced. Finally, from these an edge is made consisting of the source, target, relationship, topics, embedding, and memory evidence.
+
+The knowledge graph used in this study utilizes a simplified version of the "Chain of Explorations" method presented in \cite{Sanmartin2024}. Given a query, the knowledge graph will extract the sources and targets and return all unique relationship triples which use them as nodes. These triples are then scored for relevancy against the query, and the top five are saved. When the next round begins, each top-scoring memory from the previous round is used as the query for the knowledge graph, and the process repeats until three rounds have been completed. Then, the top-\textit{k} best scoring memories are selected from the relevant memories collected across all three arounds, and returned. The result is branching pattern, in which the knowledge graph is explored according to a chain of the most relevant memories. 
+
+As previously mentioned, this version of Chain of Explorations differs from that described in \cite{Sanmartin2024}. The original has a planning section, in which an LLM produces a multi-step plan for responding to the query. After each round of exploration, the returned triples are then evaluated by another LLM according to whether the information required by the current step has been found, and the decision is made whether or not to proceed to the next step. An LLM is also used to determine how relevant a triple is, as a supplement to cosine similarity. Due to the complexity and the increase in runtime time that this would entail, these LLM portions were omitted. Finally, the original algorithm allowed exploration based on matching relationships in addition sources and targets; only the latter two were allowed in the present version, given the predominance of semantically "light" relationships such as forms of "to be" and "to go to".
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Memory Creation}
+
+Memories are created from the chatbot history at the end of each exchange of turns, or in the case of summaries, at the end of each session. For each type of memory unit, an important preprocessing step is performed: all first- and second-person pronouns are exchanged with the names of the speakers, converting the sentences into the third person and, importantly, removing any confusion as to which pronouns refer to who. Next, the text is processed according to memory unit type. Turns are taken from the final two turns of the history, which correspond to the most recent query and the chatbot response. The same is done for observations, with an additional step which extracts an observation from the query and response separately.\footnote{An important note must be made here: this design, that observations are drawn from each turn, is modelled after the description given in section 3.3 in \cite{Maharana2024}. However, it appears that this description is incorrect, for in the appendix for that paper it is clearly shown that observations are drawn from the entire session, not from individual turns. This mistake was only recognized after the decision was made to forgo generating new observations and use those available in \textsc{LoCoMo}, and thus the original observation generator design has remained unchanged, and is being described as it currently exists in the codebase.} For summaries, the entire session history is utilized to produce a multi-sentence summary. Finally, once the memory units are created the topics are extracted and a sentence embedding is produced. These are then combined into a single memory consisting of the memory text, the topics, the embedding, and the memory evidence.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Retrieval}
+
+The retrieval system is comprised of two parts: the creation of the inputs used to score relevancy (topics and sentence embeddings) and the relevancy scoring methods (topic overlap and cosine similarity). 
+
+
+\subsubsection{Relevancy Scoring Input Creation} 
+\label{relevancy_scoring_input_creation}
+
+As mentioned in the pervious section, topics and extracted and sentence embeddings are generated during the memory creation step. Immediately preceding this is a speaker name masking step: initial tests found that speaker names exert a major bias on relevancy results, with the highest scoring memories being those which mention a speaker's name the most; only when speaker names are masked do the expected results appear, with relevancy being based upon subject matter. After masking, the topics are extracted. 
+
+Topics may be defined in two ways: as a noun, or as a noun phrase. When defining topics as a noun phrase, non-possessive pronouns and determiners are ignored, such that "the sneaky purple ork" results in "sneaky purple ork", but "my boltgun" remains unchanged. In addition to this, to handle more general references to the same topic, for each noun phrase a new topic is made by removing a modifier until the head of the phrase is reached: thus, returning to the above examples, the topics "purple ork", "ork", and "boltgun" are also extracted. The intended result of this is to reward specificity: the more specific the matching phrase, the more topics which overlap and therefore the higher relevancy score. After the topics are extracted, a sentence embedding is generated using Sentence Transformers model all-MiniLM-L6-v2.
+
+
+\subsubsection{Relevancy Scoring}
+
+Topic overlap scoring was identical to that presented in \cite{Li2024}, where the memory recall and query recall are calculated and averaged:
+
+\[
+\text{Topic Overlap Score} = \frac{1}{2} ( \frac{\text{Shared Topics}}{\text{Query Topics}} + \frac{\text{Shared Topics}}{\text{Memory Topics}} )
+\]
+
+\noindent Cosine similarity was then calculated between the sentences, and the top-\textit{k} scoring memories, along with the memory evidence, were returned.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Reflection}
+
+The reflection step is simple: given the memories retrieved from the long-term memory and the conversation history, a persona-less LLM is asked to reflect and write down its thoughts in three or four sentences. Similar to the general pipeline, in testing mode only the most recent entry in the history, i.e. current question, is provided. The rest of the history is disregarded to prevent the previous questions and answers from influencing the model's answer by providing context clues. When testing with no reflection, this step is skipped.
+
+
+
+
+
+
+
+
+
+
+
+
+

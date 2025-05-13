@@ -1,0 +1,91 @@
+\section{Experiments}
+
+As we have seen, there exists a great diversity of approaches to implementing a conversational RAG pipeline. Yet, probably due to the fact this area of research is in its infancy, only a few of these approaches have been compared against one another. Even when differing approaches are compared, it is done without any consideration to the effects of the other parts of the pipeline, or tests general performance that overlooks the nuances of particular tasks, like multi-hop or adversarial question-answering.
+
+	Thus, a comprehensive test of these differing approaches is justified. The proposed thesis is tasked with answering the following question: which combinations of memory storage format, memory unit, retrieval method, and reflection technique lead to better performance in answering questions involving self- and event-knowledge and adversarial manipulation. This is done following the methodology of \cite{Maharana2024}, using the conversational data and questions from the \textsc{LoCoMo} dataset to record the F1 score and recall for each combination of pipeline features. 
+	
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Pipeline Variants}
+	
+The experiments focused on the following variants in the conversational RAG pipeline: 
+	
+\begin{enumerate}
+  \item Storing long-term memories in a knowledge base or a knowledge graph
+  
+  \item Populating the long-term memory with individual turns, observations, or summaries
+  
+  \item Retrieving memories based on similarity or topic
+  
+  \item Reflecting upon retrieved relevant memories, or not 
+\end{enumerate}
+	
+\noindent Rather than each part of the pipeline being tested individually, each was tested in combination with one another, with the intent to capture any possible interactions that have been overlooked by pervious studies, such as the performance of reflection on different types of memory unit, or the effect of using a knowledge graph on downstream parts of the pipeline.
+
+In total, this amounted to 24 pipelines as well as a baseline lacking a long-term memory but still having access to the most recent session summary.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Dataset}
+
+The dataset used is the \textsc{LoCoMo} dataset from \cite{Maharana2024}, which consists of 10 long-term conversations. Each conversation involves a different pair of speakers, and is split up into multiple sessions. Each conversation is accompanied by several sets of additional data: 
+
+\begin{displayquote}
+1) The conversation transcript
+
+2) A question-answering dataset consisting of a question, the question type, the expected answer, and the evidence for that expected answer
+
+3) The time and date each session took place on
+
+4) Summaries of the events that take place in the lives of each speaker
+
+5) Observations about the speakers that are drawn from each session
+
+6) A summary for each session
+\end{displayquote}
+
+\noindent Of these, the conversation transcript, question-answering dataset, observations, and session summaries were utilized by the dataloader to create long-term memory files to be utilized during testing. As mentioned in the dataloader description, with two memory storage formats, three memory unit types, and ten conversations in the dataset, this resulted in 60 separate long-term memory files. In addition, for each long-term memory file a past-session summary file was saved — these remain the same across memory storage formats and unit types.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Evaluation}
+
+Testing was conducted on each of the 24 pipelines using the question-answering data, with each pipeline answering questions for each of the 10 \textsc{LoCoMo} conversations. Of the five question types present in the dataset, only three were utilized in testing: single-hop, multi-hop, and adversarial. The remaining two, temporal reasoning and commonsense/world knowledge, where excluded as the former was more of a test of the ability for the chatbot to remember timestamps rather than personal information, and the latter because it can be argued that commonsense/world knowledge questions moreso test the pretraining dataset of the underlying LLM, as opposed to than any ability of the RAG pipeline itself. 
+
+In these tests, \textit{k} was set to 10, such that the top 10 memories would be retrieved for each response. This is a departure from \cite{Maharana2024}, which tests several different \textit{k} values. While other \textit{k} values could have been tested, this would have multiplied the amount of tests that would need to be conducted, which was deemed unfeasible given the time constraints and the limited scope of this thesis.
+
+Scoring followed the procedure laid out by \cite{Maharana2024}: for each question, an F1 similarity score was calculated between the chatbot's response and the expected answer, and the recall was calculated from the proportion of correct memories found in the memory evidence. These will be discussed in further detail below.
+
+
+\subsubsection{F1 Score}
+
+\cite{Maharana2024} used a partial-match method for calculating F1 score, which was based on identifying matching lemmas between the chatbot response and the expected answer. This however was found to come with serious drawbacks: the reliance of exact word matching resulted in an excess of zeros in the initial results, comprising roughly a third of the total F1 scores, which left the data anaemic and hard to analyze. Thus, a switch was made to BERTScore, which calculates F1 score by means of similar word embeddings and therefore eliminates zeros while offering more meaningful results that can accurately take synonyms and paraphrasing into account. 
+
+
+\subsubsection{Recall}
+
+With each response the chatbot produces, it also returns memory evidence, i.e. a list consisting of the ultimate source(s) for each memory retrieved from the long-term memory, identified by the numbers of the session and turn they occur in. During scoring, when the chatbot response is scored against the expected response, its memory evidence is also checked against the expected memory evidence, i.e. the memory or memories that are needed to correctly answer the question. The recall, the percentage of the correct memories were retrieved by the chatbot during answering, is then calculated.
+
+
+\subsubsection{Adversarial Questions}
+
+A special note must be made for adversarial questions: while the expected answers for single- and multi-hop questions are gold-standard answers, for adversarial questions they represent adversarial answers: the answers the chatbot would give, if it has been successfully tricked. As a result, the F1 scores for adversarial questions must be interpreted opposite to single- and multi-hop questions, with \textit{lower} F1 scores representing \textit{better} performance, and vice-versa.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

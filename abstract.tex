@@ -1,0 +1,11 @@
+\begin{abstract}
+\setlength{\parskip}{2ex plus 0.5ex minus 0.2ex}
+
+\noindent Recent advances in generative AI have resulted in a boom of interest and research in large language model (LLM) powered chatbots, particularly for applications involving long-term conversations. Two particularly productive areas of research involve the reinforcement of a chatbot's memory and assigned identity, by means of retrieval augmented generation (RAG) — the use of an external database which is updated across conversational sessions, from which relevant information is retrieved, summarized, and then used as context for generation.
+
+\noindent However, while this general schema stays the same between approaches, the pipelines themselves can vary widely: common differences include the storage format, the type of information that is stored, the memory retrieval method, and the use of a reflection step. Moreover, many of these pipeline features have not yet been tested against one another, or if so, not in a long-term conversational context. Furthermore, many of these features that have yet to be tested in the same pipeline.
+
+\noindent This thesis surveys these various implementations of conversational RAG, and then tests their performance on 1) enhancing a model's long-term memory and self-identity and 2) handling adversarial questions. Each variation of each pipeline feature (memory type, storage format, retrieval method, reflection) is tested individually and in combination with each other against a baseline with no long-term memory using the conversations from the \textsc{LoCoMo} dataset (\cite{Maharana2024}). 
+
+\noindent Several significant results are reported. Knowledge graph models are found to perform worse than knowledge bases and even the baseline, and cosine similarity outperforms topic overlap as a method of retrieval, contradicting earlier studies. Other results reaffirm previous findings, with models that store observations and turns producing better results than those that store summaries, and reflection having an overall positive impart on F1 scores. Significant interactions are identified both between pipeline features and between features and question types, but always in a way which reinforces the selection those features which are already individually the best performing.
+\end{abstract}	

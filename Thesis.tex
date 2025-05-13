@@ -1,0 +1,96 @@
+
+%%%%%%%%%%%%
+% SETTINGS %
+%%%%%%%%%%%%
+ 
+\input{settings}
+
+
+%%%%%%%%%%%%%%%%%%
+% BEGIN DOCUMENT %
+%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%
+% PRELIMINARY CONTENT %
+%%%%%%%%%%%%%%%%%%%%%%%
+
+% Title Page
+\input{title_page.tex}
+\thispagestyle{empty}
+
+% Declaration
+\input{title_page.tex}
+\newpage
+
+% Abstract
+\input{abstract}
+\newpage
+
+% Table of contents
+\thispagestyle{empty}
+\tableofcontents
+\newpage
+
+% Start page numbering
+\setcounter{page}{1}	
+\pagenumbering{arabic}
+\newpage
+
+
+%%%%%%%%%%%%%%%%
+% MAIN CONTENT %
+%%%%%%%%%%%%%%%%
+
+% Introduction
+\input{introduction}
+\newpage
+
+% General Conversational RAG Pipeline
+\input{pipeline}
+\newpage
+
+% Literature Review
+\input{literature_review}
+\newpage
+
+% General Conversational RAG Taxonomy
+\input{taxonomy}
+\newpage
+
+
+% Chatbot Architecture
+\input{chatbot_architecture}
+\newpage
+
+% Experiments
+\input{experiments}
+\newpage
+
+% Results
+\input{results}
+\newpage
+
+% Conclusion
+\input{conclusions}
+\newpage
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+% CONCLUDING CONTENT %
+%%%%%%%%%%%%%%%%%%%%%%
+
+% References
+\bibliographystyle{apalike}
+\bibliography{references}
+
+
+%%%%%%%%%%%%%%%%
+% END DOCUMENT %
+%%%%%%%%%%%%%%%%
+
+\end{document}
+

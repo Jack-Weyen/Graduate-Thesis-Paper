@@ -1,0 +1,86 @@
+\section{Conclusion}
+
+The goal of this thesis, as stated in the introduction, was to test every combination of the various techniques that have been used for each part of the RAG conversational chatbot pipeline, and discover if general trends held for untested combinations of features, and if any significant interactions existed between them, as well as between them and the various types of questions they were used to answer. Testing proved that such trends and interactions do in fact exist, and explanations for each were put forward, when possible. In the following subsections, the major contributions of this study are summarized and conclusions are drawn for each. This is followed by a section suggesting topics for future research.
+
+
+\subsection{Contributions}
+
+Reviewing the data presented above, we find and identify several significant trends and interactions, both expected and otherwise. 
+
+
+\subsubsection{Failure of Knowledge Graphs}
+
+The most significant findings, and the ones not tested in the previous literature, involve knowledge graphs. Overall, knowledge graphs proved to be a much worse format for storing memories than knowledge bases, indeed performing even worse than a baseline where the chatbots simply made educated guesses. This reinforces the findings of \cite{Sanmartin2024}, which also show knowledge graphs to be inferior to knowledge bases, albeit to a much more extreme degree. This poor performance is attributed to 1) the limitations of the form of relationship extraction utilized, which can only extract information from specific syntactic positions — a difficult task given the complex structure of conversational language — and 2) the reliance on exact text matches for querying, which causes the chatbot to overlook paraphrases, synonyms, and other semantically similar or relevant phrases. 
+
+It is thus recommended that alternative methods of extracting sources, targets, and relationships be tested before knowledge graphs be dismissed as unfeasible for storing conversational memories. Langchain's Conversation Knowledge Graph (\cite{Langchain}) would be of especial interest for future research, since it utilizes neural models to extract relationships and therefore should avoid at least one the aforementioned drawbacks.
+
+
+\subsubsection{Ineffectiveness of Exact Matching Techniques}
+
+As mentioned above, part of the reason knowledge graphs failed to perform well is due to their reliance of exact text matching. The same issue is found with pipelines featuring topic overlap, which produce significantly worse results than cosine similarity and likewise rely on exactly matching topics. Based on these findings, we argue that text-matching techniques are not worthwhile for features of the conversational RAG pipeline which are involved in memory retrieval, given how prevalent paraphrasing and synonyms are in conversations.
+
+
+\subsubsection{Inconsistency Regarding Topic Overlap Performance}
+
+The present results regarding the performance of topic overlap conflict with those of \cite{Li2024}, which found topic overlap to perform better than cosine similarity. While two differences exist between the implementation of topic overlap in that study and the present one, specifically differences in the memory units being retrieved and the inclusion of noun phrases at topics, they are not considered sufficient to explain these conflicting findings.
+
+
+\subsubsection{Other Features Perform Predictably}
+
+The memory unit type findings are uncontroversial, matching those of previous studies when the problematic knowledge graph data are removed: observations produce the best F1 scores, followed closely by turns, and then those two followed distantly by summaries. Likewise, reflection outperforms no reflection, apparently acting as a filter that ignores irrelevant memories and synthesizes the relevant ones into a cohesive answer. 
+
+
+\subsubsection{Interactions can be Ignored}
+
+Turning to interactions, significant interactions between different parts of the pipelines abounded. However, while significant, any importance these interactions might have in informing pipeline design are for the most part nullified by stark contrasts in performance between feature variants. While turns and reflection are significantly better when used with knowledge bases, these advantages are moot considering that knowledge graphs perform so poorly that knowledge bases are the only feasible choice. Similarly, storing summaries reduces the effectiveness of cosine similarity and models which do so are more sensitive to a lack of reflection, but turns and observations already outperform summaries by such a wide margin that any further motivation to avoid summaries is superfluous. Observations are more resilient to a lack of reflection, but models lacking reflection never outperform those with it, so there's no reason reflection would ever be omitted. And finally, reflection works better when paired with topic overlap, but topic overlap is already beat in every way by cosine similarity, even with reflection. In other words, when considering what features to include in a conversational RAG pipeline, no interaction is strong enough that it would lead one to pick a specific feature over the overall best performing one.
+
+This conclusion, however, assumes that the features used are designed the same way as in this study; knowledge graphs with neural-network powered relationship extraction, or an improved form of topic overlap utilizing word embeddings, might indeed produce interactions what have actually meaningful impacts on performance worth consideration.
+
+
+\subsubsection{Interactions with Questions}
+
+When considering how different features perform with different question types, the situation is the same as above, at least for single- and multi-hop questions: the overall best performing feature variant is also the best performing feature variant for each type of question, and thus any and all interactions between features and these question types can be safely ignored. As for adversarial questions, however, conclusions are more difficult to draw, since it is uncertain whether low F1 scores represent resistance to being tricked, or simply that the model is bad at retrieving memories. Assuming the second case to be true, then the conclusions are the same as with the other two questions.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Future Research}
+
+Despite the large scope of this study, or indeed because of it, and certainly because of its many limitations, there is much research to be done that can expand upon the current results.
+
+
+\subsubsection{Extra Feature Variants and Features}
+
+First, there are many variants for each feature of the pipeline that are yet to be tested. Already mentioned are LLM- and embedding-powered knowledge graphs, such as Langchain's Conversation Knowledge Graph. In addition, event summaries can be considered as a memory unit type separate from summaries; alternative retrieval methods, such as BERTScore and time decay; and the form of reflection used by generative agents in \cite{Park2023}, where every few turns the chatbot reflects upon the conversation history, asks questions, answers them, and adds these answers to its long-term memory. Additional pipeline features, such as persona modules (which were discussed, but left untested in this study) might also be tested.
+	
+	
+\subsubsection{Combinations of Feature Variants}
+
+As well as new variants, future studies can explore models which employ different variants of the same feature at once, like in \cite{Park2023} and \cite{Zhong2023}, where scores from different retrieval methods are weighted and combined into a single score. It is also possible for long-term memories to consist of multiple types of memory unit, such as observations, summaries, and generative agent reflections. Combinations like these offer fertile ground for exploration.	
+			
+
+\subsubsection{Additional Test Methodology}
+
+In addition to what is tested, there is room to improve on the tests themselves. First, instead of scoring adversarial questions based on how similar answers are to the adversarial answer, which can produce similar F1 scores both when the chatbot is performing well (the chatbot states it is being tricked) and poorly (the chatbot states it cannot remember anything), it might be better to simply count the number of answers in which chatbot mentions it has been tricked. Moving on, one interesting metric which was omitted due to time constrains was a form of LLM-powered evaluation, which would have labelled generated answers as "correct", "incorrect", or "non-answer" — the last reserved for instances where the chatbot admits it cannot remember the answer to the question (i.e. a failure in memory retrieval). This would provide a great point of comparison against the BERTScore F1 data, cannot necessarily distinguish between an answer that is factually incorrect, and one that is gives no actual answer. Another opportunity for a follow-up study can be found in the unused \textsc{LoCoMo} question types, namely those questions dealing with temporal reasoning and open-domain knowledge. Finally, since this study limited itself to exploring interactions between two features at a time, or a feature and the different question types, there is an opportunity to explore higher levels of interactions, such as interactions between three features, or two or more features against the different question types.
+	
+	
+\subsubsection{Alternate Data Processing}
+
+The current study could be rerun with changes to how the textual data is processed. As it stands, single unaltered turns are tested, meaning that dividing turns by sentences, or storing turns in groups of two or more, are left for future work to explore. There is also the possibility of adding pronoun resolution and other steps to the session history before memories are made and saved, which might improve turn-based model scores.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

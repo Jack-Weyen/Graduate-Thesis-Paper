@@ -1,0 +1,63 @@
+%%%%%%%%%%%%%%%%%%%
+% THESIS SETTINGS %
+%%%%%%%%%%%%%%%%%%%
+
+% Document Class
+\documentclass[pdftex,12pt,a4paper]{article}
+
+% Font encoding and modern font
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+
+% Set spell check to US English
+\usepackage[american]{babel}
+
+% Graphics
+\usepackage[pdftex]{graphicx}
+\usepackage{here}
+
+% Tables
+\usepackage{booktabs}
+
+% Landscape orientation
+\usepackage{rotating}
+
+% Block quotes
+\usepackage{csquotes}
+
+% Math
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Citations and URLs
+\usepackage{natbib}
+\usepackage{url}
+
+% Page layout
+\usepackage{geometry}
+\geometry{a4paper, top=25mm, left=25mm, right=25mm, bottom=25mm}
+\linespread{1.2}
+
+% Theorem-style environments
+\newtheorem{formula}{Formula}[section]
+
+% Nicer captions
+\usepackage{caption2}
+\newcaptionstyle{mystyle}{
+  \normalcaptionparams
+  \renewcommand\captionlabelfont{\bfseries}
+  \renewcommand\captionlabeldelim{.}
+  \onelinecaptionsfalse
+  \usecaptionstyle{centerlast}
+}
+\captionstyle{mystyle}
+
+% Table of contents depth
+\setcounter{tocdepth}{3}
+
+% Horizontal rule macro
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+% Paragraph settings
+\setlength{\parindent}{20pt}

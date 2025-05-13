@@ -1,0 +1,105 @@
+\begin{thebibliography}{}
+
+\bibitem[art-from-the machine, 2023]{art-from-the-machine}
+art-from-the machine (2023).
+\newblock Mantella.
+\newblock \url{https://github.com/art-from-the-machine/Mantella}.
+\newblock [Online; accessed: 2024-07-12].
+
+\bibitem[Character.ai, 2024]{Character_ai}
+Character.ai (2024).
+\newblock Character.ai.
+\newblock \url{https://character.ai/}.
+\newblock [Online; accessed 2024-07-12].
+
+\bibitem[Fatehkia et~al., 2024]{Fatehkia2024}
+Fatehkia, M., Lucas, J.~K., and Chawla, S. (2024).
+\newblock {T}-{RAG}: {L}essons from the {LLM} {T}renches.
+\newblock \url{https://arxiv.org/abs/2402.07483}.
+
+\bibitem[Guan et~al., 2023]{Guan2023}
+Guan, X., Liu, Y., Lin, H., Lu, Y., He, B., Han, X., and Sun, L. (2023).
+\newblock Mitigating large language model hallucinations via autonomous
+  knowledge graph-based retrofitting.
+\newblock \url{https://arxiv.org/abs/2311.13314}.
+
+\bibitem[Hatalis et~al., 2024]{Hatalis2024}
+Hatalis, K., Christou, D., Myers, J., Jones, S., Lambert, K., Amos-Binks, A.,
+  Dannenhauer, Z., and Dannenhauer, D. (2024).
+\newblock Memory matters: The need to improve long-term memory in llm-agents.
+\newblock {\em Proceedings of the AAAI Symposium Series}, 2:277--280.
+
+\bibitem[Langchain, 2024]{Langchain}
+Langchain (2024).
+\newblock Conversation knowledge graph.
+\newblock
+  \url{https://python.langchain.com/v0.1/docs/modules/memory/types/kg/}.
+\newblock [Online; accessed: 2025-05-12].
+
+\bibitem[Li et~al., 2024]{Li2024}
+Li, H., Yang, C., Zhang, A., Deng, Y., Wang, X., and Chua, T.-S. (2024).
+\newblock Hello again! llm-powered personalized agent for long-term dialogue.
+\newblock \url{https://arxiv.org/abs/2406.05925}.
+
+\bibitem[Maharana et~al., 2024]{Maharana2024}
+Maharana, A., Lee, D.-H., Tulyakov, S., Bansal, M., Barbieri, F., and Fang, Y.
+  (2024).
+\newblock Evaluating very long-term conversational memory of llm agents.
+\newblock \url{https://arxiv.org/abs/2402.17753}.
+
+\bibitem[Pachipulusu, 2023]{SiteGPT}
+Pachipulusu, B.~T. (2023).
+\newblock 16 {L}eading {C}ompanies {U}sing {C}hatbots for {C}ustomer {S}ervice.
+\newblock
+  \url{https://sitegpt.ai/blog/companies-using-chatbots-for-customer-service}.
+\newblock [Online; accessed: 2024-07-10].
+
+\bibitem[Park et~al., 2023]{Park2023}
+Park, J.~S., O'Brien, J.~C., Cai, C.~J., Morris, M.~R., Liang, P., and
+  Bernstein, M.~S. (2023).
+\newblock Generative agents: Interactive simulacra of human behavior.
+\newblock \url{https://arxiv.org/abs/2304.03442}.
+
+\bibitem[Sanmart{\'i}n, 2024]{Sanmartin2024}
+Sanmart{\'i}n, D. (2024).
+\newblock Kg-rag: Bridging the gap between knowledge and creativity.
+\newblock \url{https://arxiv.org/abs/2405.12035}.
+
+\bibitem[Singhal, 2012]{Singhal2012}
+Singhal, A. (2012).
+\newblock Introducing the knowledge graph: things, not strings.
+\newblock \url{https://
+  blog.google/products/search/introducing-knowledge-graph-things-not}.
+\newblock [Online; accessed: 2024-07-26].
+
+\bibitem[Steam, 2023]{Vaudville}
+Steam (2023).
+\newblock Vaudeville.
+\newblock \url{https://store.steampowered.com/app/2240920/Vaudeville/}.
+\newblock [Online; accessed: 2024-07-12].
+
+\bibitem[vedal987, 2024]{Neuro_sama}
+vedal987 (2024).
+\newblock vedal987.
+\newblock \url{https://www.twitch.tv/vedal987/}.
+\newblock [Online; accessed: 2024-07-12].
+
+\bibitem[Wang et~al., 2024]{Wang2024}
+Wang, Z.~M., Peng, Z., Que, H., Liu, J., Zhou, W., Wu, Y., Guo, H., Gan, R.,
+  Ni, Z., Yang, J., Zhang, M., Zhang, Z., Ouyang, W., Xu, K., Huang, S.~W., Fu,
+  J., and Peng, J. (2024).
+\newblock Rolellm: Benchmarking, eliciting, and enhancing role-playing
+  abilities of large language models.
+
+\bibitem[Yang et~al., 2024]{Yang2024}
+Yang, L., Chen, H., Li, Z., Ding, X., and Wu, X. (2024).
+\newblock Give us the facts: Enhancing large language models with knowledge
+  graphs for fact-aware language modeling.
+\newblock \url{https://arxiv.org/abs/2306.11489}.
+
+\bibitem[Zhong et~al., 2023]{Zhong2023}
+Zhong, W., Guo, L., Gao, Q., Ye, H., and Wang, Y. (2023).
+\newblock Memorybank: Enhancing large language models with long-term memory.
+\newblock \url{https://arxiv.org/abs/2305.10250}.
+
+\end{thebibliography}
