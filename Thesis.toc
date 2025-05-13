@@ -58,19 +58,19 @@
 \contentsline {subsection}{\numberline {7.5}Tests Between Features and Question Types}{40}{}%
 \contentsline {subsubsection}{\numberline {7.5.1}General Trends Exhibited by Question Types}{40}{}%
 \contentsline {subsubsection}{\numberline {7.5.2}Memory Storage Format × Question Type}{42}{}%
-\contentsline {subsubsection}{\numberline {7.5.3}Memory Unit Type × Question Type}{43}{}%
+\contentsline {subsubsection}{\numberline {7.5.3}Memory Unit Type × Question Type}{42}{}%
 \contentsline {subsubsection}{\numberline {7.5.4}Retrieval Method × Question Type}{43}{}%
-\contentsline {subsubsection}{\numberline {7.5.5}Reflection × Question Type}{44}{}%
-\contentsline {section}{\numberline {8}Conclusion}{47}{}%
-\contentsline {subsection}{\numberline {8.1}Contributions}{47}{}%
-\contentsline {subsubsection}{\numberline {8.1.1}Failure of Knowledge Graphs}{47}{}%
-\contentsline {subsubsection}{\numberline {8.1.2}Ineffectiveness of Exact Matching Techniques}{47}{}%
-\contentsline {subsubsection}{\numberline {8.1.3}Inconsistency Regarding Topic Overlap Performance}{48}{}%
-\contentsline {subsubsection}{\numberline {8.1.4}Other Features Perform Predictably}{48}{}%
-\contentsline {subsubsection}{\numberline {8.1.5}Interactions can be Ignored}{48}{}%
-\contentsline {subsubsection}{\numberline {8.1.6}Interactions with Questions}{49}{}%
-\contentsline {subsection}{\numberline {8.2}Future Research}{49}{}%
-\contentsline {subsubsection}{\numberline {8.2.1}Extra Feature Variants and Features}{49}{}%
-\contentsline {subsubsection}{\numberline {8.2.2}Combinations of Feature Variants}{49}{}%
-\contentsline {subsubsection}{\numberline {8.2.3}Additional Test Methodology}{50}{}%
-\contentsline {subsubsection}{\numberline {8.2.4}Alternate Data Processing}{50}{}%
+\contentsline {subsubsection}{\numberline {7.5.5}Reflection × Question Type}{43}{}%
+\contentsline {section}{\numberline {8}Conclusion}{46}{}%
+\contentsline {subsection}{\numberline {8.1}Contributions}{46}{}%
+\contentsline {subsubsection}{\numberline {8.1.1}Failure of Knowledge Graphs}{46}{}%
+\contentsline {subsubsection}{\numberline {8.1.2}Ineffectiveness of Exact Matching Techniques}{46}{}%
+\contentsline {subsubsection}{\numberline {8.1.3}Inconsistency Regarding Topic Overlap Performance}{47}{}%
+\contentsline {subsubsection}{\numberline {8.1.4}Other Features Perform Predictably}{47}{}%
+\contentsline {subsubsection}{\numberline {8.1.5}Interactions can be Ignored}{47}{}%
+\contentsline {subsubsection}{\numberline {8.1.6}Interactions with Questions}{48}{}%
+\contentsline {subsection}{\numberline {8.2}Future Research}{48}{}%
+\contentsline {subsubsection}{\numberline {8.2.1}Extra Feature Variants and Features}{48}{}%
+\contentsline {subsubsection}{\numberline {8.2.2}Combinations of Feature Variants}{48}{}%
+\contentsline {subsubsection}{\numberline {8.2.3}Additional Test Methodology}{49}{}%
+\contentsline {subsubsection}{\numberline {8.2.4}Alternate Data Processing}{49}{}%
