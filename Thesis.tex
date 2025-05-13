@@ -21,23 +21,27 @@
 \input{title_page.tex}
 \thispagestyle{empty}
 
+% Start front matter page numbering
+\pagenumbering{roman}
+
 % Declaration
 \input{declaration.tex}
+\thispagestyle{plain}
 \newpage
 
 % Abstract
 \input{abstract}
+\thispagestyle{plain}
 \newpage
 
 % Table of contents
-\thispagestyle{empty}
 \tableofcontents
+\thispagestyle{plain}
 \newpage
 
-% Start page numbering
+% Start main page numbering
 \setcounter{page}{1}	
 \pagenumbering{arabic}
-\newpage
 
 
 %%%%%%%%%%%%%%%%
