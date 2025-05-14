@@ -2,7 +2,7 @@
 
 As we have seen, there exists a great diversity of approaches to implementing a conversational RAG pipeline. Yet, probably due to the fact this area of research is in its infancy, only a few of these approaches have been compared against one another. Even when differing approaches are compared, it is done without any consideration to the effects of the other parts of the pipeline, or tests general performance that overlooks the nuances of particular tasks, like multi-hop or adversarial question-answering.
 
-	Thus, a comprehensive test of these differing approaches is justified. The proposed thesis is tasked with answering the following question: which combinations of memory storage format, memory unit, retrieval method, and reflection technique lead to better performance in answering questions involving self- and event-knowledge and adversarial manipulation. This is done following the methodology of \cite{Maharana2024}, using the conversational data and questions from the \textsc{LoCoMo} dataset to record the F1 score and recall for each combination of pipeline features. 
+Thus, a comprehensive test of these differing approaches is justified. The present thesis endeavors to answer the following question: which combinations of memory storage formats, memory unit types, retrieval methods, and reflection lead to better performance in answering questions involving self- and event-knowledge and adversarial manipulation. This is done following the methodology of \cite{Maharana2024}, using the conversational data and questions from the \textsc{LoCoMo} dataset to record the F1 score and recall for each combination of pipeline features. 
 	
 	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -21,7 +21,7 @@ The experiments focused on the following variants in the conversational RAG pipe
   \item Reflecting upon retrieved relevant memories, or not 
 \end{enumerate}
 	
-\noindent Rather than each part of the pipeline being tested individually, each was tested in combination with one another, with the intent to capture any possible interactions that have been overlooked by pervious studies, such as the performance of reflection on different types of memory unit, or the effect of using a knowledge graph on downstream parts of the pipeline.
+\noindent Rather than each part of the pipeline being tested individually, each was tested in combination with one another, with the intent to capture any possible interactions that have been overlooked by pervious studies, such as the performance of reflection with different types of memory unit, or the effect of using a knowledge graph on downstream parts of the pipeline.
 
 In total, this amounted to 24 pipelines as well as a baseline lacking a long-term memory but still having access to the most recent session summary.
 
@@ -67,7 +67,7 @@ Scoring followed the procedure laid out by \cite{Maharana2024}: for each questio
 
 \subsubsection{Recall}
 
-With each response the chatbot produces, it also returns memory evidence, i.e. a list consisting of the ultimate source(s) for each memory retrieved from the long-term memory, identified by the numbers of the session and turn they occur in. During scoring, when the chatbot response is scored against the expected response, its memory evidence is also checked against the expected memory evidence, i.e. the memory or memories that are needed to correctly answer the question. The recall, the percentage of the correct memories were retrieved by the chatbot during answering, is then calculated.
+With each response the chatbot produces, it also returns memory evidence, i.e. a list consisting of the ultimate source(s) for each memory retrieved from the long-term memory, identified by the numbers of the session and turn(s) they occur in. During scoring, when the chatbot response was scored against the expected response, its memory evidence was also checked against the expected memory evidence, i.e. the memory or memories that are needed to correctly answer the question. The recall, defined as the percentage of the correct memories that were retrieved by the chatbot during answering, was then calculated.
 
 
 \subsubsection{Adversarial Questions}

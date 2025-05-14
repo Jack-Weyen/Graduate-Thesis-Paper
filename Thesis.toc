@@ -72,5 +72,5 @@
 \contentsline {subsection}{\numberline {8.2}Future Research}{49}{}%
 \contentsline {subsubsection}{\numberline {8.2.1}Extra Feature Variants and Features}{49}{}%
 \contentsline {subsubsection}{\numberline {8.2.2}Combinations of Feature Variants}{49}{}%
-\contentsline {subsubsection}{\numberline {8.2.3}Additional Test Methodology}{50}{}%
+\contentsline {subsubsection}{\numberline {8.2.3}Additional Test Methodology}{49}{}%
 \contentsline {subsubsection}{\numberline {8.2.4}Alternate Data Processing}{50}{}%
